@@ -1,60 +1,54 @@
-# Portfolio Website
+# Portfolio Website (Static)
 
-FastAPI-driven portfolio for showcasing Abu Shalak Ruhan's AI and software work. It serves a Tailwind-powered single-page experience with live stats, project highlights, education timeline, and a downloadable Markdown resume that regenerates from Python data structures.
+Fully static, single-page portfolio for showcasing Abu Shalak Ruhan's AI and software work. Everything is rendered in `index.html`, so you can host it on any static hosting platform—no FastAPI or server runtime required.
 
 ## Features
-- Responsive, animated UI with Tailwind CSS and custom gradients
+- Responsive Tailwind UI with gradients, glassmorphism, and section reveals
 - Light/dark theme toggle with persistence via `localStorage`
-- Dynamic stats counters and experience timeline cards
-- Markdown resume generator available at `/resume/download`
-- Structured project, skills, experience, and education sections driven from `main.py`
+- Animated stat counters, timeline cards, and smooth scrolling navigation
+- Contact shortcuts plus a direct link to the latest resume snapshot
+- Vanilla JS + CSS only; deploy by uploading the files or serving them directly
 
 ## Tech Stack
-- FastAPI + Uvicorn
-- Jinja2 templates
-- Tailwind CSS via CDN
-- Vanilla JavaScript for animations and theming
+- HTML + Tailwind CSS via CDN
+- Vanilla JavaScript (`static/app.js`) for theme + animation logic
+- Minimal CSS helpers in `static/styles.css`
 
 ## Project Structure
 ```
 .
-├── main.py               # FastAPI app, data definitions, resume builder
-├── templates/
-│   ├── base.html         # Global layout, header, footer, scripts
-│   └── index.html        # Portfolio content sections
+├── index.html            # Standalone page containing all content
 ├── static/
 │   ├── app.js            # Theme toggle, animations, stat counters
 │   └── styles.css        # Helper styles for animations
 └── README.md
 ```
 
-## Local Setup
+## Local Preview
 1. Clone the repo:
    ```powershell
    git clone https://github.com/shalakruhan28/Portfolio-Website.git
    cd Portfolio-Website
    ```
-2. Create a virtual environment (optional but recommended):
+2. Open `index.html` directly in your browser **or** run a lightweight static server:
    ```powershell
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
+   python -m http.server 8000
+   # or
+   npx serve .
    ```
-3. Install dependencies:
-   ```powershell
-   pip install fastapi uvicorn jinja2 python-multipart
-   ```
-4. Run the app:
-   ```powershell
-   uvicorn main:app --reload
-   ```
-5. Open the site at http://127.0.0.1:8000.
+3. Visit http://localhost:8000 to preview.
 
-## Deployment Notes
-- The app is self-contained and can be deployed to any ASGI-compatible platform (Railway, Render, Azure App Service, etc.).
-- Ensure static files (`static/`) and templates (`templates/`) are copied alongside `main.py`.
-- Adjust `host` and `port` in the `if __name__ == "__main__"` block for your target environment.
+## Deployment
+- Upload `index.html` and the `static/` folder to GitHub Pages, Netlify Drop, Vercel static deploys, Azure Static Web Apps, Amazon S3 + CloudFront, etc.
+- Ensure relative paths remain intact (`static/...`).
+- For custom domains, point DNS to your host and verify HTTPS.
 
-## Future Enhancements
-- Hook the contact section to a real backend or email service
-- Add more project cards sourced from GitHub automatically
-- Provide a PDF resume generator in addition to Markdown
+## Customization
+- Update hero text, stats, projects, skills, and experience directly in `index.html`. Each section is grouped together, so it is easy to edit.
+- Adjust theme colors or animations in `static/styles.css` and `static/app.js`.
+- Swap fonts or Tailwind config in the `<head>` block if you prefer a different look.
+
+## Next Ideas
+- Wire the contact section to services like Formspree or Buttondown.
+- Auto-populate projects via the GitHub API.
+- Export a PDF version of the resume and link it alongside the Markdown copy.
