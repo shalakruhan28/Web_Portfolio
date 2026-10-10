@@ -83,7 +83,7 @@ const resumeModal = document.getElementById('resumeModal');
 const resumeForm = document.getElementById('resumeForm');
 const closeResumeModal = document.getElementById('closeResumeModal');
 const resumeFormError = document.getElementById('resumeFormError');
-const resumeUrl = 'https://drive.google.com/file/d/1Ju6mpId0g5zu3QalIbel9VJa_q7DGzmg/view';
+const resumeUrl = 'https://drive.google.com/file/d/1rYMViBPeBx1sCxXFWncwmUwOXZPl75IB/view';
 const resumeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6c4V9Z6u3aBhtMoyoXlZOhAf09PsxcMxnOuKspWDT9KYLsPNEjX0mj_qDeHOMOkOq/exec';
 
 const closeResumeDialog = () => {
