@@ -78,3 +78,67 @@ counterCards.forEach((card, index) => {
     };
     setTimeout(() => requestAnimationFrame(animate), startDelay);
 });
+
+const resumeModal = document.getElementById('resumeModal');
+const resumeForm = document.getElementById('resumeForm');
+const closeResumeModal = document.getElementById('closeResumeModal');
+const resumeFormError = document.getElementById('resumeFormError');
+const resumeUrl = 'https://drive.google.com/file/d/1Ju6mpId0g5zu3QalIbel9VJa_q7DGzmg/view';
+const resumeWebAppUrl = 'https://script.google.com/macros/s/AKfycbz6c4V9Z6u3aBhtMoyoXlZOhAf09PsxcMxnOuKspWDT9KYLsPNEjX0mj_qDeHOMOkOq/exec';
+
+const closeResumeDialog = () => {
+    if (resumeModal) {
+        resumeModal.classList.add('hidden');
+        resumeModal.classList.remove('flex');
+    }
+};
+
+document.querySelectorAll('.resume-download').forEach((link) => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (resumeModal) {
+            resumeModal.classList.remove('hidden');
+            resumeModal.classList.add('flex');
+            document.getElementById('resumeName')?.focus();
+        }
+    });
+});
+
+closeResumeModal?.addEventListener('click', closeResumeDialog);
+resumeModal?.addEventListener('click', (event) => {
+    if (event.target === resumeModal) {
+        closeResumeDialog();
+    }
+});
+
+resumeForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const submitButton = resumeForm.querySelector('button[type="submit"]');
+    const formData = new FormData(resumeForm);
+    resumeFormError?.classList.add('hidden');
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Saving...';
+    }
+
+    try {
+        await fetch(resumeWebAppUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: formData,
+        });
+        window.open(resumeUrl, '_blank', 'noopener,noreferrer');
+        resumeForm.reset();
+        closeResumeDialog();
+    } catch (error) {
+        if (resumeFormError) {
+            resumeFormError.textContent = 'We could not record your details. Please try again.';
+            resumeFormError.classList.remove('hidden');
+        }
+    } finally {
+        if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Continue to resume';
+        }
+    }
+});
